@@ -1,25 +1,32 @@
 name: novaos
-description: NovaOS Heterogeneous Multi-GPU Gaming & AI Operating System
+description: NovaOS Heterogeneous Multi-GPU Gaming AI and Hardened OS
 base-image: ghcr.io/ublue-os/bazzite-nvidia
 image-version: latest
 
 modules:
   - type: rpm-ostree
     install:
-      # Drivers y Vulkan para AMD + NVIDIA
+      # Drivers y Vulkan Multi-GPU (AMD + NVIDIA)
       - mesa-vulkan-drivers
       - vulkan-tools
       - akmod-nvidia
       - xorg-x11-drv-nvidia-cuda
       
-      # Compatibilidad Windows (.exe)
+      # Blindaje Anti-Hacker y Ciberseguridad
+      - firewalld
+      - clamav
+      - clamd
+      - clamav-update
+      - bubblewrap
+      - fail2ban
+      
+      # Compatibilidad Windows (.exe) y Juegos
       - wine
       - winetricks
       - lutris
       - steam
       
-      # Entorno de IA y Agentes (Devin / Ollama)
-      - bubblewrap
+      # Agentes IA y herramientas
       - git
       - curl
       - python3-pip
