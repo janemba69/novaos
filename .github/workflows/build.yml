@@ -1,0 +1,37 @@
+name: Build NovaOS ISO
+on:
+  workflow_dispatch:
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build NovaOS Image
+        uses: blue-build/github-action@v1
+        with:
+          recipe: recipe.yml
+          cli_version: v0.9.5
+
+      - name: Generate Bootable ISO
+        uses: jasonn3/build-container-installer@v1.2.4
+        with:
+          arch: x86_64
+          image_name: novaos
+          image_repo: ghcr.io/${{ github.repository_owner }}
+          version: latest
+          variant: Bazzite
+          iso_name: NovaOS-MultiGPU-x86_64.iso
+
+      - name: Upload ISO Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NovaOS-MultiGPU-Installer
+          path: |
+            build/*.iso
+            build/*.iso-CHECKSUM
