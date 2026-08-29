@@ -1,7 +1,9 @@
 FROM ghcr.io/ublue-os/bazzite-nvidia:latest
 
-# Instalar módulos de seguridad, Multi-GPU y entorno Devin
+# Instalar módulos: APK/Android Nativo, Seguridad Anti-Hacker, Multi-GPU y Entorno
 RUN rpm-ostree install \
+    waydroid \
+    android-tools \
     firewalld \
     clamav \
     bubblewrap \
